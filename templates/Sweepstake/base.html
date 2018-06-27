@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %} Portfolio Overview {% endblock %}</title>
+        <meta name="wc2018_base">
+        <link rel="stylesheet" href="{% static 'Sweepstake/Style.css' %}">
+        <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+        </script>
+    </head>
+    <body>
+        <header id="showcase">
+            <div class="header_background"></div>
+            <div class="header_content">
+                <h1>World Cup 2018 Sweepstake</h1>
+                <p>Cushman & Wakefield</p>
+                {% block link %}
+                {% endblock %}
+            </div>
+        </header>
+        
+        <main class="grid">
+        {% block content %}
+        {% endblock %}
+        </main>
+        <footer class="grid">
+            <p class = "footer-tekst"></p>
+        </footer>
+    </body>
+    <script src="{% static 'Sweepstake/app.js' %}"></script>
+</html>
