@@ -1,0 +1,1 @@
+web: gunicorn wc2018.wsgi

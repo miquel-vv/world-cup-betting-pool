@@ -1,0 +1,39 @@
+{% extends "Sweepstake/base.html" %}
+{% load static %}
+
+{% block title %} Leaderbords {% endblock %}
+
+{% block link %}
+<a class="link" href="/">Index</a>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div id="participant_list">
+        <h1>Leaderbord</h1>
+        <ul class="item_list">
+            <li class="title">
+                <div class="item_name">Name</div><div class="item_points">Points</div>
+            </li>
+        </ul>
+    </div>
+    <div id="participant_pot">
+        <h1>Skill Line Rank</h1>
+        <ul class="item_list">
+            <li class="title">
+                <div class="item_name">Name</div><div class="item_points">Average Points</div>
+            </li>
+        </ul>
+    </div>
+    <div id="participant_location">
+        <h1>Team Country Rank</h1>
+        <ul class="item_list">
+            <li class="title">
+                <div class="item_name">Name</div><div class="item_points">Average Points</div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}
