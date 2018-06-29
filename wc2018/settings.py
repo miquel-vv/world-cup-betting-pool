@@ -25,7 +25,7 @@ SECRET_KEY = '42&yl8in216%eru17)wx$(qq!0x&o)0w&7llxf!q(se6p=2t1b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cushwake-sweepstake.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

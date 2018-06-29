@@ -11,8 +11,8 @@ class CalculateScores(CronJobBase):
     code = 'Sweepstake.CalculateScores'    # a unique code
 
     def do(self):
-        self.__get_results()
-        self.__update_points()
+        #self.__get_results()
+        #self.__update_points()
         self.participant_points()
 
     def __get_results(self):

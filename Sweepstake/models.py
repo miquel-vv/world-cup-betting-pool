@@ -51,6 +51,7 @@ class Fixture(models.Model):
     goals_home_team = models.IntegerField(default=0)
     goals_away_team = models.IntegerField(default=0)
     score_status = models.CharField(max_length=50, default='not counted')  # Can be 'counted' or 'not counted'
+    matchday = models.IntegerField(default=0)
 
     def __str__(self):
         name = '{} - {}, {}'.format(self.home_team.code, self.away_team.code, self.time.strftime('%d - %m'))
