@@ -1,5 +1,6 @@
 $(document).ready(function(){
     var page = $(location).attr('pathname');
+    console.log(page);
 
     if(page=='/leaderbords'){
         $.getJSON("api/participants")
