@@ -53,9 +53,12 @@ class Participant(models.Model):
         return self.name
 
     def set_points(self):
+        self.points = 0
+        self.previous_points = {key: 0 for key in range(1, 9)}
+
         for team in self.teams.all():
             for matchdays, pts in team.previous_points.items():
-                self.previous_points[matchdays] += pts
+                self.previous_points[int(matchdays)] += pts
             self.points += team.points
 
 
@@ -84,16 +87,16 @@ class Fixture(models.Model):
         if self.matchday < 4:
             return
         elif self.matchday == 4:
-            self.points_loser = 1  # Because loser survived the group stage
-            self.points_winner = 6
+            self.points_loser = 1       # Because loser survived the group stage
+            self.points_winner = 7      # 2 for winning, 1 for passing group stage, 4 for surviving last 16
         elif self.matchday == 5:
-            self.points_winner = 7
+            self.points_winner = 7      # 2 for winning, 5 for passing group stage
         elif self.matchday == 6:
-            self.points_winner = 9
+            self.points_winner = 9      # 2 for winning, 7 for being at least second
         elif self.matchday == 7:
-            self.points_winner = 2
+            self.points_winner = 2      # 2 for winning
         elif self.matchday == 8:
-            self.points_winner = 9
+            self.points_winner = 9      # 2 for winning 7 for being WC
 
     def give_points(self):
         """Gives the points to the appropriate team"""
