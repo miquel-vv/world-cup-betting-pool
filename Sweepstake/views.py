@@ -20,6 +20,7 @@ def leaderbords(request):
 def teams(request):
     return render(request, 'Sweepstake/teams.html')
 
+
 class Participants(View):
 
     item = Participant
@@ -43,89 +44,78 @@ class Participants(View):
 class Teams(Participants):
     item = Team
 
+
 class Update(View):
 
-    def get(self, request):
-        self.get_results()
+    def get(self, request, **kwargs):
+        self.get_results(**kwargs)
 
         participants = Participant.objects.all()
         for participant in participants:
-            participant.set_points()
-            participant.save()
+            with participant:
+                participant.set_points()
 
         return HttpResponseRedirect('leaderbords')
+
+    def set_filters(self, **kwargs):
+        kwargs['dateFrom'] = Fixture.objects.last_counted()
+        kwargs['dateTo'] = '2018-07-16'
+
+        template = '&{filter}={value}'
+        filters = ''
+        for filter, value in kwargs.items():
+            filters += template.format(filter=filter, value=value)
+        return filters
 
     def get_results(self):
         """Updates the game scores in the DB"""
         headers = {'X-Auth-Token': '36b47a042ef748fe913405438dd5bbf4'}
-        data = requests.get('http://api.football-data.org/v1/competitions/467/fixtures', headers=headers)
+        data = requests.get('http://api.football-data.org/v2/competitions/{competition}/matches?'
+                            '{filter}'.format(competition=Fixture.objects.competition, filter=self.set_filters()),
+                            headers=headers)
         data = data.json()
-        fixtures = data['fixtures']
+        print(data)
+        fixtures = data['matches']
 
         for fixture in fixtures:
+            not_saved = ('TIMED', 'IN_PLAY')
+            if fixture['status'] in not_saved:
+                continue
+
             try:
-                print('Getting first fixture')
-                db_fixture = self.get_from_db(fixture)
+                db_fixture = Fixture.objects.get(fd_id=fixture['id'])
             except ObjectDoesNotExist:
-                continue
+                db_fixture = self.new_fixture(fixture)
 
-            try:
-                if db_fixture.status == 'FINISHED':
-                    if not db_fixture.counted:
-                        print('giving points for the game {}'.format(db_fixture.__str__()))
-                        db_fixture.set_points()
-                        db_fixture.give_points()
-                        db_fixture.save()
-            except AttributeError:
-                continue
-
-    def get_from_db(self, fixture):
-        """Tries to get from db, calls create new entry if not in db."""
-        home_team = Team.objects.get(name=fixture['homeTeamName'])
-        try:
-            db_fixture = Fixture.objects.get(home_team=home_team, matchday=fixture['matchday'])
-        except ObjectDoesNotExist:
-            db_fixture = self.new_fixture(fixture)
-
-        print('returning {}'.format(db_fixture.__str__()))
-        return db_fixture
+            if db_fixture.status == 'FINISHED':
+                with db_fixture as db:
+                    db.score = fixture['score']
+                    db.give_points()
 
     def new_fixture(self, fixture):
-        """Creates a new fixture in the database"""
-        kwargs = {}
+        """Creates a new fixture in the database only when the status returns finished"""
 
-        print('creating home team: {} on matchday: {}'.format(fixture['homeTeamName'], fixture['matchday']))
+        kwargs = {
+            'fd_id': fixture['id'],
+            'home_team': Team.objects.get(name=fixture['homeTeam']['name']),
+            'away_team': Team.objects.get(name=fixture['awayTeam']['name']),
+            'status': fixture['status'],
+            'stage': fixture['stage'],
+            'matchday': fixture['matchday']
+        }
 
-        date, time = fixture['date'].split('T')  # date = yyyy-mm-dd, time = hh:mm:ssZ
+        date, time = fixture['utcDate'].split('T')  # date = yyyy-mm-dd, time = hh:mm:ssZ
         date = date.split('-')
         time = time.split(':')
 
-        kwargs['home_team'] = Team.objects.get(name=fixture['homeTeamName'])
-        kwargs['away_team'] = Team.objects.get(name=fixture['awayTeamName'])
-        kwargs['status'] = fixture['status']
         kwargs['time'] = datetime(int(date[0]), int(date[1]), int(date[2]), int(time[0]), int(time[1]),
                                   tzinfo=timezone.utc)
-        kwargs['matchday'] = fixture['matchday']
-
-        not_saved = ('SCHEDULED', 'TIMED', 'IN PLAY')
-        if fixture['status'] in not_saved:
-            return
-
-        try:
-            kwargs['penalty_home_team'] = fixture['result']['penaltyShootout']['goalsHomeTeam']
-            kwargs['penalty_away_team'] = fixture['result']['penaltyShootout']['goalsAwayTeam']
-            kwargs['penalties'] = True
-        except KeyError:
-            try:
-                kwargs['goals_home_team'] = fixture['result']['extraTime']['goalsHomeTeam']
-                kwargs['goals_away_team'] = fixture['result']['extraTime']['goalsHomeTeam']
-            except KeyError:
-                kwargs['goals_home_team'] = fixture['result']['goalsHomeTeam']
-                kwargs['goals_away_team'] = fixture['result']['goalsAwayTeam']
 
         new_fixture = Fixture(**kwargs)
-        new_fixture.save()
+        print('points are {}'.format(new_fixture.points))
+        with new_fixture:
+            new_fixture.set_points()
 
         print('successfully created {}'.format(new_fixture.__str__()))
-
+        print('points are {}'.format(new_fixture.points))
         return new_fixture

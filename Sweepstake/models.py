@@ -1,9 +1,8 @@
 from django.db import models
 from .errors import StatusError
 from django.contrib.postgres.fields import JSONField
+from collections import defaultdict
 
-
-# Create your models here.
 class Team(models.Model):
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=3)
@@ -17,6 +16,14 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.points = 0
+        for previous in self.previous_points.values():
+            self.points += previous
+        self.save()
 
 class Player(models.Model):
     name = models.CharField(max_length=200)
@@ -35,14 +42,7 @@ class Participant(models.Model):
     topscorer = models.ForeignKey(Player, related_name='topscorer', on_delete=models.CASCADE)
     assist_king = models.ForeignKey(Player, related_name='assist_king', on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
-    previous_points = JSONField(default={1: 0,
-                                         2: 0,
-                                         3: 0,
-                                         4: 0,
-                                         5: 0,
-                                         6: 0,
-                                         7: 0,
-                                         8: 0})
+    previous_points = JSONField(default={})
     location = models.CharField(max_length=50)
     pot = models.CharField(max_length=50)
 
@@ -53,29 +53,59 @@ class Participant(models.Model):
         return self.name
 
     def set_points(self):
-        self.points = 0
-        self.previous_points = {key: 0 for key in range(1, 9)}
-
+        self.previous_points = defaultdict(int)
         for team in self.teams.all():
-            for matchdays, pts in team.previous_points.items():
-                self.previous_points[int(matchdays)] += pts
-            self.points += team.points
+            for matchday, pts in team.previous_points.items():
+                self.previous_points[matchday] += pts
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.points = 0
+        for previous in self.previous_points.values():
+            self.points += previous
+        self.save()
+
+
+class FixtureManager(models.Manager):
+    """Manager object to check when the last fixture was counted."""
+
+    competition = 2000
+
+    def last_counted(self, string=True):
+
+        last_counted = super().get_queryset().filter(counted=True).last()
+
+        if not last_counted:
+            return '2018-06-13'  # This means that no fixture was found and therefor first date of the comp is returned.
+
+        if string:
+            return last_counted.time.strftime('%Y-%m-%d')
+        else:
+            return last_counted
 
 
 class Fixture(models.Model):
+    fd_id = models.IntegerField(verbose_name='Football-data id')
     home_team = models.ForeignKey(Team, related_name='home_team', on_delete=models.CASCADE)
     away_team = models.ForeignKey(Team, related_name='away_team', on_delete=models.CASCADE)
+    stage = models.CharField(max_length=50)
+    matchday = models.IntegerField(null=True)
     status = models.CharField(max_length=50)
     time = models.DateTimeField()
-    goals_home_team = models.IntegerField(default=0)
-    goals_away_team = models.IntegerField(default=0)
+
+    score = JSONField(default={})   # Replicates the score dict from football-data.org. Makes updating easier.
+
+    points = JSONField(default={'winner': 2,
+                                'loser': 0})
+
     counted = models.BooleanField(default=False)
-    matchday = models.IntegerField(default=0)
-    penalties = models.BooleanField(default=False)
-    penalty_home_team = models.IntegerField(default=0)
-    penalty_away_team = models.IntegerField(default=0)
-    points_winner = models.IntegerField(default=2)
-    points_loser = models.IntegerField(default=0)
+
+    objects = FixtureManager()
+
+    class Meta:
+        ordering = ['time']
 
     def __str__(self):
         name = '{} - {}, {}'.format(self.home_team.code, self.away_team.code, self.time.strftime('%d - %m'))
@@ -84,58 +114,53 @@ class Fixture(models.Model):
     def set_points(self):
         """Set the points to be won with this game."""
 
-        if self.matchday < 4:
+        points = {
+            'GROUP_STAGE': (2, 0),
+            'ROUND_OF_16': (7, 1),  # 2 for winning, 1 for passing group stage (for loser too), 4 for surviving last 16
+            'QUARTER_FINALS': (7, 0),  # 2 for winning, 5 for passing Round of 16
+            'SEMI_FINALS': (9, 0),  # 2 for winning, 7 for being at least second
+            'FINAL': (9, 0)     # 2 for winning 7 for being WC
+        }
+        try:
+            self.points['winner'], self.points['loser'] = points[self.stage]
+        except KeyError:
+            print('{} was groupstage'.format(self.matchday))
             return
-        elif self.matchday == 4:
-            self.points_loser = 1       # Because loser survived the group stage
-            self.points_winner = 7      # 2 for winning, 1 for passing group stage, 4 for surviving last 16
-        elif self.matchday == 5:
-            self.points_winner = 7      # 2 for winning, 5 for passing group stage
-        elif self.matchday == 6:
-            self.points_winner = 9      # 2 for winning, 7 for being at least second
-        elif self.matchday == 7:
-            self.points_winner = 2      # 2 for winning
-        elif self.matchday == 8:
-            self.points_winner = 9      # 2 for winning 7 for being WC
 
     def give_points(self):
         """Gives the points to the appropriate team"""
+        print('{} - {} won by {}'.format(self.home_team, self.away_team, self.score['winner']))
 
-        if self.status != 'FINISHED' or self.counted:
-            raise StatusError
+        if self.score['winner'] == 'DRAW':
+            print('{} - {} taken as draw'.format(self.home_team, self.away_team))
+            self.points['winner'] = 1
+            self.points['loser'] = 1
+            winner = self.home_team    # Named winner just for ease
+        else:
+            winner = self.__getattribute__(self.score['winner'].lower())
 
-        def decide_winner(self):
-            if self.penalties:
-                goals = 'penalty_'
-            else:
-                goals = 'goals_'
+        if winner == self.home_team:
+            loser = self.away_team
+        else:
+            loser = self.home_team
 
-            if self.__getattribute__(goals + 'home_team') > self.__getattribute__(goals + 'away_team'):
-                self.home_team.points += self.points_winner
-                self.home_team.previous_points[self.matchday] = self.points_winner
-                self.away_team.points += self.points_loser
-                self.away_team.previous_points[self.matchday] = self.points_loser
-                return True
-            elif self.__getattribute__(goals + 'home_team') < self.__getattribute__(goals + 'away_team'):
-                self.away_team.points += self.points_winner
-                self.away_team.previous_points[self.matchday] = self.points_winner
-                self.home_team.points += self.points_loser
-                self.home_team.previous_points[self.matchday] = self.points_loser
-                return True
-            else:
-                return False
+        with winner as win:
+            win.previous_points[self.get_previous_name()] = self.points['winner']
 
-        self.counted = decide_winner(self)
+        with loser as lost:
+            lost.previous_points[self.get_previous_name()] = self.points['loser']
 
-        if not self.counted:
-            self.home_team.points += 1
-            self.home_team.previous_points[self.matchday] = 1
-            self.away_team.points += 1
-            self.away_team.previous_points[self.matchday] = 1
-            self.counted = True
+        self.counted = True
 
-        if not self.counted:
-            raise ValueError
+    def get_previous_name(self):
+        if self.matchday:                   # To identify in the previous_points dicts of both Team and Participant
+            previous_name = self.matchday
+        else:
+            previous_name = self.stage
+        return previous_name
 
-        self.home_team.save()
-        self.away_team.save()
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.save()
