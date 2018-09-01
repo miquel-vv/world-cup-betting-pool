@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,10 +54,6 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
-CRON_CLASSES = [
-    'Sweepstake.crons.CalculateScores'
-]
-
 ROOT_URLCONF = 'wc2018.urls'
 
 TEMPLATES = [
@@ -82,16 +79,9 @@ WSGI_APPLICATION = 'wc2018.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'wc2018',
-        'USER': 'django',
-        'PASSWORD': 'djangopassword',
-        'HOST': 'localhost',
-        'PORT': ''
-    }
+    'default': dj_database_url.config(default='postgres://django:djangopassword@localhost:5432/wc2018',
+                                      conn_max_age=600)
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -130,11 +120,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
