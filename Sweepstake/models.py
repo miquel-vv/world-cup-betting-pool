@@ -3,6 +3,7 @@ from .errors import StatusError
 from django.contrib.postgres.fields import JSONField
 from collections import defaultdict
 
+
 class Team(models.Model):
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=3)
@@ -24,6 +25,7 @@ class Team(models.Model):
         for previous in self.previous_points.values():
             self.points += previous
         self.save()
+
 
 class Player(models.Model):
     name = models.CharField(max_length=200)
@@ -71,7 +73,7 @@ class Participant(models.Model):
 class FixtureManager(models.Manager):
     """Manager object to check when the last fixture was counted."""
 
-    competition = 2000
+    competition = 2000  # The competion id in Football-data.org for the World Cup
 
     def last_counted(self, string=True):
 
