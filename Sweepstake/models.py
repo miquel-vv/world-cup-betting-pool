@@ -7,7 +7,7 @@ from collections import defaultdict
 class Team(models.Model):
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=3)
-    pot = models.IntegerField()
+    pot = models.IntegerField(default=0)
     points = models.IntegerField(default=0)
     previous_points = JSONField(default={})
 
@@ -73,7 +73,8 @@ class Participant(models.Model):
 class FixtureManager(models.Manager):
     """Manager object to check when the last fixture was counted."""
 
-    competition = 2000  # The competion id in Football-data.org for the World Cup
+    competition = 2000 # The competion id in Football-data.org for the World Cup
+    competition_name = 'fifa world cup'
 
     def last_counted(self, string=True):
 
@@ -96,12 +97,9 @@ class Fixture(models.Model):
     matchday = models.IntegerField(null=True)
     status = models.CharField(max_length=50)
     time = models.DateTimeField()
-
     score = JSONField(default={})   # Replicates the score dict from football-data.org. Makes updating easier.
-
     points = JSONField(default={'winner': 2,
                                 'loser': 0})
-
     counted = models.BooleanField(default=False)
 
     objects = FixtureManager()
