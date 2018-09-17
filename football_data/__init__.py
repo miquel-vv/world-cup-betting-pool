@@ -1,1 +1,1 @@
-from .football_data import CompetitionData
+from .football_data import CompetitionInterface
