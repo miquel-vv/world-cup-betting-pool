@@ -1,19 +1,20 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ObjectDoesNotExist
 from Sweepstake.models import Participant, Fixture, Team
+from wc2018.football_data import CompetitionData
 
 import os
 import requests
 from datetime import datetime, timezone
+from wc2018.football_data import CompetitionInterface
 
 
 class Command(BaseCommand):
     help = 'Updates the scores of the fictures and gives points to the teams and participants.'
 
     def handle(self, *args, **options):
-        competition = Fixture.objects.competition
-        filters = self.set_filters()
-        fixtures = self.get_results(competition, filters)
+        competition = CompetitionInterface(competition_name=Fixture.objects.competition_name)
+        fixtures = competition.get_matches(dateFrom=Fixture.objects.last_counted())
 
         self.update_fixtures(fixtures)
 
@@ -23,29 +24,6 @@ class Command(BaseCommand):
                 participant.set_points()
 
         self.stdout.write('Succesfully updated fixtures.')
-
-    def set_filters(self, **kwargs):
-        """Create the timeframe with only games that need updating."""
-
-        kwargs['dateFrom'] = Fixture.objects.last_counted()
-        kwargs['dateTo'] = '2018-07-16'
-
-        template = '&{filter}={value}'
-        filters = ''
-        for filter, value in kwargs.items():
-            filters += template.format(filter=filter, value=value)
-        return filters
-
-    def get_results(self, competition, filters):
-        """fetches the results from Football-Data"""
-
-        headers = {'X-Auth-Token': os.environ['FOOTBALL_DATA_API']}
-        data = requests.get('http://api.football-data.org/v2/competitions/{competition}/matches?{filter}'
-                            .format(competition=competition,
-                                    filter=filters),
-                            headers=headers)
-        data = data.json()
-        return data['matches']
 
     def update_fixtures(self, fixtures):
         for fixture in fixtures:
