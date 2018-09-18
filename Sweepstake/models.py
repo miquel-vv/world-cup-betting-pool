@@ -90,7 +90,7 @@ class FixtureManager(models.Manager):
 
 
 class Fixture(models.Model):
-    fd_id = models.IntegerField(verbose_name='Football-data id')
+    fd_id = models.IntegerField(verbose_name='Football-data id', unique=True)
     home_team = models.ForeignKey(Team, related_name='home_team', on_delete=models.CASCADE)
     away_team = models.ForeignKey(Team, related_name='away_team', on_delete=models.CASCADE)
     stage = models.CharField(max_length=50)
