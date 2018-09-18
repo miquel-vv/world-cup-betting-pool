@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 from Sweepstake.models import Participant, Fixture, Team
 from wc2018.football_data import CompetitionData
 
@@ -16,7 +17,15 @@ class Command(BaseCommand):
         competition = CompetitionInterface(competition_name=Fixture.objects.competition_name)
         fixtures = competition.get_matches(dateFrom=Fixture.objects.last_counted())
 
-        self.update_fixtures(fixtures)
+        live_fixtures = [fixture for fixture in fixtures if fixture.satus in ('TIMED', 'IN_PLAY')]
+        finished_fixtures = [fixture for fixture in fixtures if fixture.status == 'FINISHED']
+
+        for fixture in finished_fixtures:
+            kwargs = self.set_kwargs(fixture)
+            try:
+                self.new_fixture(**kwargs)
+            except IntegrityError:
+                self.old_fixture(**kwargs)
 
         participants = Participant.objects.all()
         for participant in participants:
@@ -25,49 +34,39 @@ class Command(BaseCommand):
 
         self.stdout.write('Succesfully updated fixtures.')
 
-    def update_fixtures(self, fixtures):
-        for fixture in fixtures:
-            if fixture['status'] in ('TIMED', 'IN_PLAY'):
-                continue
+    @staticmethod
+    def set_kwargs(fixture):
+        try:
+            fixture['home_team'] = Team.objects.get(name=fixture['home_team'])
+            fixture['away_team'] = Team.objects.get(name=fixture['away_team'])
+        except ObjectDoesNotExist:
+            raise ObjectDoesNotExist("One of the teams {} or {} does not exist in the database. Please create teams"
+                                     "first before updating points.".format(fixture['home_team'], fixture['away_team']))
 
-            try:
-                db_fixture = Fixture.objects.get(fd_id=fixture['id'])
-            except ObjectDoesNotExist:
-                db_fixture = self.new_fixture(fixture)
+        fixture['time'] = (datetime
+                           .strptime(fixture['time'], "%Y-%m-%dT%H:%M:%SZ")
+                           .replace(tzinfo=timezone.utc))
+        return fixture
 
-            if db_fixture.status == 'FINISHED':
-                with db_fixture as db:
-                    db.score = fixture['score']
-                    db.give_points()
-
-    def new_fixture(self, fixture):
-        """Creates a new fixture in the database only when the status returns finished"""
-
-        kwargs = {
-            'fd_id': fixture['id'],
-            'home_team': Team.objects.get(name=fixture['homeTeam']['name']),
-            'away_team': Team.objects.get(name=fixture['awayTeam']['name']),
-            'status': fixture['status'],
-            'stage': fixture['stage'],
-            'matchday': fixture['matchday']
-        }
-
-        date, time = fixture['utcDate'].split('T')  # date = yyyy-mm-dd, time = hh:mm:ssZ
-        date = date.split('-')
-        time = time.split(':')
-
-        kwargs['time'] = datetime(int(date[0]),
-                                  int(date[1]),
-                                  int(date[2]),
-                                  int(time[0]),
-                                  int(time[1]),
-                                  tzinfo=timezone.utc)
-
-        new_fixture = Fixture(**kwargs)
+    @staticmethod
+    def new_fixture(fixture):
+        new_fixture = Fixture(**fixture)
         print('points are {}'.format(new_fixture.points))
         with new_fixture:
             new_fixture.set_points()
 
-        print('successfully created {}'.format(new_fixture.__str__()))
-        print('points are {}'.format(new_fixture.points))
-        return new_fixture
+    @staticmethod
+    def old_fixture(fixture):
+        """Gets called when the new_fixture method errors because an existing fixture already existed.
+        If that fixture is already counted and the score is different than what is in the db, an error should be raised.
+        At the moment all scores should be recounted. Will have to create a roll_back method on the model to backtrack
+        the points given and recalculate the scores."""
+
+        existing_fixture = Fixture.objects.get(fd_id=fixture['fd_id'])
+        with existing_fixture as ef:
+            if not ef.counted:
+                ef.score = fixture['score']
+                ef.give_points()
+            elif ef.counted and not ef.score:
+                raise IntegrityError("points were given incorrectly, in order to assure accuracy points need to be"
+                                     "reset.")
