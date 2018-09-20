@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = 'Updates the scores of the fictures and gives points to the teams and participants.'
+    help = 'Updates the scores of the fixtures and gives points to the teams and participants.'
 
     def handle(self, *args, **options):
         competition = CompetitionInterface(competition_name=Fixture.objects.competition_name)

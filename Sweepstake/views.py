@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from .models import Player, Participant, Team
+from .management.commands.update_scores import Command as update_command
 
 import json
 
 
-# Create your views here.
 def index(request):
     return render(request, 'Sweepstake/index.html')
 
@@ -17,6 +17,12 @@ def leaderbords(request):
 
 def teams(request):
     return render(request, 'Sweepstake/teams.html')
+
+
+def update(request):
+    updater = update_command()
+    updater.handle()
+    return HttpResponseRedirect('/leaderbords')
 
 
 class Itemview(View):

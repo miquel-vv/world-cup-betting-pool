@@ -11,3 +11,33 @@
 2018-09-20 13:53:55,348:Sweepstake.management.commands.update_scores:INFO:Ended looping over fixtures
 2018-09-20 13:53:55,348:Sweepstake.management.commands.update_scores:INFO:Start looping over participants
 2018-09-20 13:53:55,426:Sweepstake.management.commands.update_scores:INFO:Ended looping over participants.
+2018-10-22 20:32:57,896:django.request:WARNING:Not Found: /favicon.ico
+2018-10-22 20:33:18,536:django.request:WARNING:Not Found: /update
+2018-10-22 20:33:26,838:urllib3.connectionpool:DEBUG:Starting new HTTPS connection (1): api.football-data.org:443
+2018-10-22 20:40:45,343:urllib3.connectionpool:DEBUG:Starting new HTTPS connection (1): api.football-data.org:443
+2018-10-22 20:40:45,974:urllib3.connectionpool:DEBUG:https://api.football-data.org:443 "GET /v2/competitions?plan=TIER_ONE& HTTP/1.1" 200 None
+2018-10-22 20:40:46,341:Sweepstake.management.commands.update_scores:INFO:Got fixtures
+2018-10-22 20:40:46,344:urllib3.connectionpool:DEBUG:Starting new HTTPS connection (1): api.football-data.org:443
+2018-10-22 20:40:46,650:urllib3.connectionpool:DEBUG:https://api.football-data.org:443 "GET /v2/competitions/2000/matches?dateFrom=2018-07-15&dateTo=2018-10-22& HTTP/1.1" 200 None
+2018-10-22 20:40:46,653:Sweepstake.management.commands.update_scores:DEBUG:1 finished fixtures
+2018-10-22 20:40:46,653:Sweepstake.management.commands.update_scores:INFO:Start looping over fixtures
+2018-10-22 20:40:46,763:Sweepstake.models:INFO:Match France vs Croatia in the FINAL, matchday None got points set to {'winner': 9, 'loser': 0}
+2018-10-22 20:40:46,763:Sweepstake.models:INFO:France - Croatia won by HOME_TEAM
+2018-10-22 20:40:46,763:Sweepstake.models:INFO:France4 - 2Croatia was won by France
+2018-10-22 20:40:47,001:Sweepstake.management.commands.update_scores:INFO:Ended looping over fixtures
+2018-10-22 20:40:47,001:Sweepstake.management.commands.update_scores:INFO:Start looping over participants
+2018-10-22 20:40:47,221:Sweepstake.management.commands.update_scores:INFO:Ended looping over participants.
+2018-10-22 20:42:45,878:urllib3.connectionpool:DEBUG:Starting new HTTPS connection (1): api.football-data.org:443
+2018-10-22 20:42:46,416:urllib3.connectionpool:DEBUG:https://api.football-data.org:443 "GET /v2/competitions?plan=TIER_ONE& HTTP/1.1" 200 None
+2018-10-22 20:42:46,479:Sweepstake.management.commands.update_scores:INFO:Got fixtures
+2018-10-22 20:42:46,479:urllib3.connectionpool:DEBUG:Starting new HTTPS connection (1): api.football-data.org:443
+2018-10-22 20:42:46,760:urllib3.connectionpool:DEBUG:https://api.football-data.org:443 "GET /v2/competitions/2000/matches?dateFrom=2018-07-15&dateTo=2018-10-22& HTTP/1.1" 200 None
+2018-10-22 20:42:46,760:Sweepstake.management.commands.update_scores:DEBUG:1 finished fixtures
+2018-10-22 20:42:46,760:Sweepstake.management.commands.update_scores:INFO:Start looping over fixtures
+2018-10-22 20:42:46,775:Sweepstake.models:INFO:Match France vs Croatia in the FINAL, matchday None got points set to {'winner': 9, 'loser': 0}
+2018-10-22 20:42:46,775:Sweepstake.models:INFO:France - Croatia won by HOME_TEAM
+2018-10-22 20:42:46,775:Sweepstake.models:INFO:France4 - 2Croatia was won by France
+2018-10-22 20:42:46,822:Sweepstake.management.commands.update_scores:INFO:Ended looping over fixtures
+2018-10-22 20:42:46,822:Sweepstake.management.commands.update_scores:INFO:Start looping over participants
+2018-10-22 20:42:46,912:Sweepstake.management.commands.update_scores:INFO:Ended looping over participants.
+2018-10-26 18:56:49,293:django.request:WARNING:Not Found: /favicon.ico
