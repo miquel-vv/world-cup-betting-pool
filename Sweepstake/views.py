@@ -19,7 +19,7 @@ def teams(request):
     return render(request, 'Sweepstake/teams.html')
 
 
-class Participants(View):
+class Itemview(View):
 
     item = Participant
 
@@ -37,6 +37,10 @@ class Participants(View):
             response[self.__class__.__name__].append(part_dict)
         response = json.dumps(response)
         return HttpResponse(response, content_type='application/json')
+
+
+class Participants(Itemview):
+    item = Participant
 
 
 class Teams(Participants):
