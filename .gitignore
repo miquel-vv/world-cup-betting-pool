@@ -1,4 +1,3 @@
 __pycache__/
 *.pyc
-tox.ini
-.tox
+.log
