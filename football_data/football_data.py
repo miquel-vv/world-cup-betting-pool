@@ -1,4 +1,11 @@
 from football_data_api import CompetitionData
+import logging
+
+logging.basicConfig(filename='../../log/log.txt',
+                    format='%(asctime)s:%(name)s:%(levelname)s:%(message)s',
+                    level=logging.DEBUG)
+
+logger = logging.getLogger(__name__)
 
 
 class CompetitionInterface(CompetitionData):

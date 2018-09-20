@@ -1,13 +1,20 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
+from datetime import datetime
 from Sweepstake.models import Participant, Fixture, Team
-from wc2018.football_data import CompetitionData
+from football_data import CompetitionInterface
 
-import os
-import requests
+import logging
+
 from datetime import datetime, timezone
-from wc2018.football_data import CompetitionInterface
+
+
+logging.basicConfig(filename='../../log/log.txt',
+                    format='%(asctime)s:%(name)s:%(levelname)s:%(message)s',
+                    level=logging.DEBUG)
+
+logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
@@ -15,22 +22,29 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         competition = CompetitionInterface(competition_name=Fixture.objects.competition_name)
-        fixtures = competition.get_matches(dateFrom=Fixture.objects.last_counted())
+        fixtures = competition.get_matches(dateFrom=Fixture.objects.last_counted(), dateTo=datetime.now())
 
-        live_fixtures = [fixture for fixture in fixtures if fixture.satus in ('TIMED', 'IN_PLAY')]
-        finished_fixtures = [fixture for fixture in fixtures if fixture.status == 'FINISHED']
+        logger.info('Got fixtures')
 
+        finished_fixtures = [fixture for fixture in fixtures if fixture['status'] == 'FINISHED']
+        logger.debug('{} finished fixtures'.format(len(finished_fixtures)))
+
+        logger.info('Start looping over fixtures')
         for fixture in finished_fixtures:
             kwargs = self.set_kwargs(fixture)
             try:
-                self.new_fixture(**kwargs)
+                self.new_fixture(kwargs)
             except IntegrityError:
-                self.old_fixture(**kwargs)
+                self.old_fixture(kwargs)
+
+        logger.info('Ended looping over fixtures')
 
         participants = Participant.objects.all()
+        logger.info('Start looping over participants')
         for participant in participants:
             with participant:
                 participant.set_points()
+        logger.info('Ended looping over participants.')
 
         self.stdout.write('Succesfully updated fixtures.')
 
@@ -51,9 +65,9 @@ class Command(BaseCommand):
     @staticmethod
     def new_fixture(fixture):
         new_fixture = Fixture(**fixture)
-        print('points are {}'.format(new_fixture.points))
         with new_fixture:
             new_fixture.set_points()
+            new_fixture.give_points()
 
     @staticmethod
     def old_fixture(fixture):

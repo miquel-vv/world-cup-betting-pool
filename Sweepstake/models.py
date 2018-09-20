@@ -2,6 +2,13 @@ from django.db import models
 from .errors import StatusError
 from django.contrib.postgres.fields import JSONField
 from collections import defaultdict
+import logging
+
+logging.basicConfig(filename='log/log.txt',
+                    format='%(asctime)s:%(name)s:%(levelname)s:%(message)s',
+                    level=logging.DEBUG)
+
+logger = logging.getLogger(__name__)
 
 
 class Team(models.Model):
@@ -57,8 +64,11 @@ class Participant(models.Model):
     def set_points(self):
         self.previous_points = defaultdict(int)
         for team in self.teams.all():
+            team_points = 0
             for matchday, pts in team.previous_points.items():
+                team_points += pts
                 self.previous_points[matchday] += pts
+            assert team_points == team.points
 
     def __enter__(self):
         return self
@@ -123,19 +133,21 @@ class Fixture(models.Model):
         }
         try:
             self.points['winner'], self.points['loser'] = points[self.stage]
+            logger.info('Match {} vs {} in the {}, matchday {} got points set to {}'
+                        .format(self.home_team, self.away_team, self.stage, self.matchday, self.points))
         except KeyError:
-            print('{} was groupstage'.format(self.matchday))
-            return
+            logger.exception('{} raised keyerror'.format(self.stage))
+            self.points['winner'], self.points['loser'] = (2, 0)
 
     def give_points(self):
         """Gives the points to the appropriate team"""
-        print('{} - {} won by {}'.format(self.home_team, self.away_team, self.score['winner']))
+        logger.info('{} - {} won by {}'.format(self.home_team, self.away_team, self.score['winner']))
 
         if self.score['winner'] == 'DRAW':
-            print('{} - {} taken as draw'.format(self.home_team, self.away_team))
-            self.points['winner'] = 1
+            logger.info('{} - {} was draw'.format(self.home_team, self.away_team))
+            self.points['winner'] = 1   # Draw only happens in group stage so only one point each.
             self.points['loser'] = 1
-            winner = self.home_team    # Named winner just for ease
+            winner = self.home_team     # Named winner just for ease
         else:
             winner = self.__getattribute__(self.score['winner'].lower())
 
@@ -143,6 +155,13 @@ class Fixture(models.Model):
             loser = self.away_team
         else:
             loser = self.home_team
+
+        logger.info('{home_team}{home_team_points} - {away_team_points}{away_team} was won by {winner}'
+                    .format(home_team=self.home_team,
+                            home_team_points=self.score['fullTime']['homeTeam'],
+                            away_team=self.away_team,
+                            away_team_points=self.score['fullTime']['awayTeam'],
+                            winner=winner))
 
         with winner as win:
             win.previous_points[self.get_previous_name()] = self.points['winner']
@@ -153,7 +172,8 @@ class Fixture(models.Model):
         self.counted = True
 
     def get_previous_name(self):
-        if self.matchday:                   # To identify in the previous_points dicts of both Team and Participant
+        """Matchday = null if fixture in knock out phase. So need to identify the right name to use."""
+        if self.matchday:
             previous_name = self.matchday
         else:
             previous_name = self.stage
