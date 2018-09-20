@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.views import View
-from .models import Player, Participant, Team, Fixture
+from .models import Player, Participant, Team
 
 import json
 

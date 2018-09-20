@@ -1,5 +1,4 @@
 from django.db import models
-from .errors import StatusError
 from django.contrib.postgres.fields import JSONField
 from collections import defaultdict
 import logging

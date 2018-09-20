@@ -1,7 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
-from datetime import datetime
 from Sweepstake.models import Participant, Fixture, Team
 from football_data import CompetitionInterface
 
