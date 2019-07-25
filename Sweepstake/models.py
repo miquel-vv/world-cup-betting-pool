@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.db.models import Q
 from collections import defaultdict
 import logging
 
@@ -10,15 +11,140 @@ logging.basicConfig(filename='log/log.txt',
 logger = logging.getLogger(__name__)
 
 
-class Team(models.Model):
+def get_suffix(position):
+    '''Helper function to get the suffix of a number's suffix'''
+    suffices = ['th', 'st', 'nd', 'rd'] + 6*['th']
+    return suffices[int(str(position)[-1])]
+
+
+class CardCreatorMixin():
+    '''A class which provides the get_summary() functionality needed to create
+    cards and row elements.'''
+
+    def get_image(self):
+        '''Implement in child as they each have their specific image.'''
+        raise NotImplementedError
+    
+    def get_summary(self, position=0, verbose=True):
+        ''' This function returns a dictionary that is passed as context to create 
+            a countries card or table row in the view tab. The function should be used
+            by the manager, as it requires the position to create the output.
+            args:
+                position: Tuple (position, suffix) passed by the manager
+                verbose: Boolean. If true, '"Place" and "Points" get added to the
+                        position and points number.
+            output:
+                A dictionary formatted as: {
+                    name:
+                    image:
+                    position:
+                    points:
+                }
+        '''
+        position = position if position else self.position
+
+        if verbose:
+            place = '{0}<sup>{1}</sup> Place'.format(position, get_suffix(position)) 
+            points = '{} Points'.format(self.points)
+        else:
+            place = '{0}<sup>{1}</sup>'.format(position, get_suffix(position)) 
+            points = '{}'.format(self.points)
+
+        summary = {
+            'class': self.__class__.__name__,
+            'name': self.name,
+            'image': self.get_image(),
+            'position': place,
+            'points': points
+        }
+
+        return summary
+
+class GeneralManager(models.Manager):
+    '''The general manager adds functionality required for both teams and participants
+    which are called members in this class.'''
+
+    def get_pot_leaderbord(self, pot_name):
+        '''Creates a list of dicts (from the member.get_summary()) function, to create a 
+        leaderbord specifically for the pot.
+        args:
+            pot_name: Name of the pot for which to create a leaderbord.
+        output:
+            list of dicts (from the member.get_summary()).
+        '''
+
+        pot_list = []
+        for i, member in enumerate(super(GeneralManager, self).get_queryset().filter(pot=pot_name)):
+            pot_list.append(member.get_summary(i+1, False))
+        
+        return pot_list
+    
+    def get_member(self, name):
+        '''Gets a member and adds the position of that member. getting the member normally
+        doesn't add the position of the member.'''
+
+        for i, member in enumerate(super(GeneralManager, self).get_queryset()):
+            if member.name == name:
+                member.position = i+1
+                return member
+        
+        raise KeyError("Member " + name + " not found.")
+    
+    def get_score_after_stage(self, stage):
+        '''Returns all members as queryset() after a certain stage. Together with the points
+        and position after that stage.
+        args: 
+            the stage group_stage, last_16, quarter_final, semi-final or final
+        output: 
+            list sorted by position, with each list item being the tuple (Member, points).
+        '''
+
+        stage_keys = ['1','2','3','ROUND_OF_16','QUARTER_FINALS', 'SEMI_FINALS', '3RD_PLACE', 'FINAL']
+        stage_limit = {    
+            'group_stage': 2,
+            'last_16': 3,
+            'quarter_final': 4,
+            'semi_final': 5,
+            'final': 7
+        }
+
+        members = []
+        for member in self.get_queryset():
+            points = 0
+            for i in range(0,stage_limit[stage]+1):
+                try:
+                    points += member.previous_points[stage_keys[i]]
+                except KeyError:
+                    if stage_keys[i] == '3RD_PLACE':
+                        continue
+                    break
+
+            members.append((member, points))
+    
+        members.sort(reverse=True, key=lambda x: x[1])
+        return members
+    
+    def get_position(self, member):
+        for i, m in enumerate(self.all()):
+            if m==member:
+                return i+1
+
+class Team(models.Model, CardCreatorMixin):
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=3)
     pot = models.IntegerField(default=0)
     points = models.IntegerField(default=0)
     previous_points = JSONField(default={})
+    objects = GeneralManager()
 
     class Meta:
         ordering = ['-points']
+    
+    @classmethod
+    def from_db(cls, db, field_names, values):
+        instance = super().from_db(db, field_names, values)
+        instance._position = None 
+        return instance
 
     def __str__(self):
         return self.name
@@ -31,6 +157,21 @@ class Team(models.Model):
         for previous in self.previous_points.values():
             self.points += previous
         self.save()
+
+    def get_image(self):
+        name = self.name.lower().replace(' ', '-')
+        return 'v2/icons/countries/{}.svg'.format(name)
+    
+    @property
+    def position(self):
+        if not self._position:
+            self._position = Team.objects.get_position(self)
+        return self._position
+    
+    @position.setter
+    def position(self, val):
+        self._position = val
+    
 
 
 class Player(models.Model):
@@ -44,7 +185,7 @@ class Player(models.Model):
         return self.name
 
 
-class Participant(models.Model):
+class Participant(models.Model, CardCreatorMixin):
     name = models.CharField(max_length=200)
     teams = models.ManyToManyField(Team)
     topscorer = models.ForeignKey(Player, related_name='topscorer', on_delete=models.CASCADE)
@@ -52,13 +193,21 @@ class Participant(models.Model):
     points = models.IntegerField(default=0)
     previous_points = JSONField(default={})
     location = models.CharField(max_length=50)
-    pot = models.CharField(max_length=50)
+    pot = models.CharField(max_length=50) #To create subgroups within participants.
+
+    objects = GeneralManager()
 
     class Meta:
         ordering = ['-points']
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def from_db(cls, db, field_names, values):
+        instance = super().from_db(db, field_names, values)
+        instance._position = None 
+        return instance
 
     def set_points(self):
         self.previous_points = defaultdict(int)
@@ -69,6 +218,9 @@ class Participant(models.Model):
                 self.previous_points[matchday] += pts
             assert team_points == team.points
 
+    def get_image(self):
+        return 'v2/icons/user-shape-card.svg'
+
     def __enter__(self):
         return self
 
@@ -77,6 +229,16 @@ class Participant(models.Model):
         for previous in self.previous_points.values():
             self.points += previous
         self.save()
+    
+    @property
+    def position(self):
+        if not self._position:
+            self._position = Participant.objects.get_position(self)
+        return self._position
+    
+    @position.setter
+    def position(self, val):
+        self._position = val
 
 
 class FixtureManager(models.Manager):
@@ -96,6 +258,10 @@ class FixtureManager(models.Manager):
             return last_counted.time.strftime('%Y-%m-%d')
         else:
             return last_counted
+
+    def get_fixtures_of(self, team):
+        '''Gets all the fixtures of a team, home and away.'''
+        return self.filter(Q(home_team=team) | Q(away_team=team))
 
 
 class Fixture(models.Model):
@@ -177,6 +343,38 @@ class Fixture(models.Model):
         else:
             previous_name = self.stage
         return previous_name
+
+    def get_summary(self):
+        '''Creates a summary that is used by a view to create a game card.
+        args:/
+        output: dict {
+            home_team: {name:, goals:, image:},
+            away_team: {name:, goals:, image:},
+            points: points,
+            winner: winner
+            }
+        '''
+
+        home_team = {
+            'name': self.home_team.name,
+            'goals': self.score['fullTime']['homeTeam'],
+            'image': self.home_team.get_image()
+        }
+        away_team = {
+            'name': self.away_team.name,
+            'goals': self.score['fullTime']['awayTeam'],
+            'image': self.away_team.get_image()
+        }
+
+        winner = self.home_team if home_team['goals'] >= away_team['goals'] else self.away_team
+
+        summary = {
+            'home_team': home_team,
+            'away_team': away_team,
+            'points': self.points,
+            'winner': winner
+        }
+        return summary
 
     def __enter__(self):
         return self
