@@ -1,0 +1,31 @@
+{% extends 'v2/base.html' %}
+{% load static %}
+
+{% block db-content %}
+<div style="background-color: white; grid-column: 1/9; grid-row: 1/13">
+{{ leaderbord }}
+</div>
+
+<div style="background-color: white; grid-column: 9/13; grid-row: 1/5" class="podium" id='first_place'>
+  <div class="leaderbord-header">
+      <img src="{% static 'v2/icons/trophy.svg' %}">
+      <div class="name">1<sup>st</sup> Place</div>
+  </div>
+  {{1_place}}
+</div>
+<div style="background-color: white; grid-column: 9/13; grid-row: 5/9" class="podium" id='second_place'>
+  <div class="leaderbord-header">
+      <img src="{% static 'v2/icons/trophy.svg' %}">
+      <div class="name">2<sup>nd</sup> Place</div>
+  </div>
+  {{2_place}}
+</div>
+<div style="background-color: white; grid-column: 9/13; grid-row: 9/13" class="podium" id='third_place'>
+  <div class="leaderbord-header">
+      <img src="{% static 'v2/icons/trophy.svg' %}">
+      <div class="name">3<sup>rd</sup> Place</div>
+  </div>
+  {{3_place}}
+</div>
+
+{% endblock %}

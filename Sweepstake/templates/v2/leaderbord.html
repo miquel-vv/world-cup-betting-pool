@@ -1,0 +1,13 @@
+{% load static %}
+
+<div class="leaderbord">
+  <div class="leaderbord-header">
+      <img src="{% static 'v2/icons/trophy.svg' %}">
+      <div class="name">{{ leaderbord }}</div>
+  </div>
+  <table>
+      {% for row in rows %}
+          {{row}}
+      {% endfor %}
+  </table>
+</div>

@@ -1,0 +1,427 @@
+a{
+    color: antiquewhite;
+    text-decoration-line: none;
+    display: block;
+}
+html, body{
+    height: 100%;
+    margin: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1{
+    font-size: 1.5em;
+}
+p{
+    font-size: 1em;
+}
+
+header{
+    position: absolute;
+    top:0;
+    width: 100%;
+    min-width: 1015px;
+    height: 1.5em;
+    background-color: #6AB187;
+    text-align: center;
+    display: block;
+    color: aliceblue;
+}
+.container{
+    position: absolute;
+    top: 1.5em;
+    width: 100%;
+    height: calc(100% - 1.5em);
+    min-height: 600px;
+    margin: 0em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+/*Side bar settings*/
+.sidebar{
+    min-width: 200px;
+    max-width: 17.5em;
+    background-color: #23282D;
+}
+.sidebar-header{
+    color: antiquewhite;
+    text-align: center;
+    border-bottom: 0.05em solid gray;
+    padding-bottom: 0.3em;
+    margin: 0em 0.5em 0 0.5em;
+}
+.sidebar-header img{
+    width: 5em;
+    height: 5em;
+    margin-top: 2em;
+}
+.sidebar-header h1{
+    font-weight: normal;
+    margin: 0.3em 0 0 0;
+}
+.sidebar-header h2{
+    font-weight: normal;
+    margin-top: 0.4em;
+}
+.sidebar-list{
+    list-style-type: none;
+    padding: 0em;
+    margin: 0em;
+    text-align: left;
+}
+.sidebar-list li{
+    padding: 0.6em 0em 0.6em 0em;
+    margin: 0.2em 0em 0.2em 0em;
+}
+.sidebar-list li img{
+    margin: 0em 1em 0em 1em;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+}
+.sidebar-list li .name{
+    display: inline;
+    vertical-align: middle;
+}
+.sidebar-list a :hover {
+    background-color: darkgray;
+}
+
+/*Content settings*/
+.content{
+    flex-grow: 3;
+    background-color: lightgray;
+}
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    grid-gap: 1em;
+    height: calc(100% - 1em);
+    padding: 0.5em;
+    min-width: 800px;
+}
+.db-el{
+    background-color: white;
+}
+/*Dashboard blocks position*/
+#db-block-1_7-1_13{
+    grid-column: 1 / 13;
+    grid-row: 1 / 7;    
+}
+#db-block-1_7-1_5{
+    grid-column: 1 / 5;
+    grid-row: 1 / 7;    
+}
+#db-block-1_7-5_13{
+    grid-column: 5 / 13;
+    grid-row: 1 / 7;    
+}
+#db-block-7_13-1_7{
+    grid-column: 1 / 7;
+    grid-row: 7 / 13;
+}
+#db-block-7_13-7_13{
+    grid-column: 7 / 13;
+    grid-row: 7 / 13;
+}
+#db-block-7_13-1_5{
+    grid-column: 1 / 5;
+    grid-row: 7 / 13;
+}
+#db-block-7_13-5_13{
+    grid-column: 5 / 13;
+    grid-row: 7 / 13;
+}
+/*-----------Specific wc 2018 elements---------------*/
+/* Card css */
+.card{
+    height: 100%;
+    text-align: center;
+    position: relative;
+}
+.card-link:hover{
+    transform: scale(1.05);
+}
+
+.card-img{
+    display: inline-grid;
+    height: calc(100% - 100px - 1em);
+    width: 100%;
+    grid-template-rows: 1fr 6em 1fr;
+    grid-template-columns: 1f 6em 1fr;
+}
+.card-img img{
+    height: 6em;
+    width: 6em;
+    grid-row-start: 2;
+    grid-column-start: 2;
+}
+.card-text{
+    position: absolute;
+    height: 100px;
+    width: calc(100% - 1em);
+    bottom: 0;
+    padding: 0.5em;
+    text-align: center;
+    background-color: #6AB187;
+    color: white;
+}
+.card p{
+    margin: 0.2em;
+}
+
+.card a{
+    height: 100%;
+}
+
+.card h1{
+    margin: 0.2em 0 0.2em 0;
+}
+/* Podium */
+.podium .card{
+    height: calc(100% - 2.9em);
+    min-width: 350px;
+}
+
+.podium .card-img{
+    height: 100%;
+    width: 50%;
+    position: relative;
+    float: left;
+}
+
+.podium h1{
+    padding-top: 1em;
+}
+
+.podium .card-text{
+    height: 100%;
+    width: 50%;
+    margin-left: 50%;
+    padding: 0;
+}
+
+#first_place .card-text{
+    background-color: gold;
+    color: #1F3F49;
+}
+
+#second_place .card-text{
+    background-color: silver;
+    color: #1F3F49;
+}
+
+#third_place .card-text{
+    background-color: coral;
+    color: #1F3F49;
+}
+
+/* Header */
+.leaderbord-header{
+    height: 2.9em;
+    background-color: #23282D;
+    line-height: 100%;
+    position: relative;
+    text-align: center;
+}
+.leaderbord-header img{
+    position: absolute;
+    left: 0;
+    margin: 0.5em;
+    height: 2em;
+    width: 2em;
+    vertical-align: middle;
+}
+.leaderbord-header .name{
+    display: inline;
+    color: white;
+    vertical-align: middle;
+    padding-top:  2em;
+}
+
+/* Countries Chosen grid*/
+.countries-chosen{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 5px 1fr 5px; /* to add padding without messing up the cards size.*/
+    grid-column-gap: 5px;
+    height: calc(100% - 46.4px);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.countries-chosen .card{
+    grid-row: 2 / 3;
+}
+
+.countries-chosen .card-img {
+    grid-template-rows: 1fr 4.5em 1fr;
+    grid-template-columns: 1f 4.5em 1fr;
+}
+
+.countries-chosen .card-img img{
+    height: 4.5em;
+    width: 4.5em;
+}
+
+.countries-chosen .card-text{
+    background-color: #dddddd;
+    color: #23282D;
+}
+
+/* Games grid */
+.games-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 10px;
+    grid-template-rows: 1fr 1fr;
+    height: calc(100% - 46.4px);
+}
+
+.games-container h4{
+    margin: 8px;
+}
+
+.group-games{
+    grid-column: 1;
+    grid-row: 1 / 3;
+    text-align: center;
+    align-self: center;
+}
+
+.last-16{
+    grid-column: 2;
+    grid-row: 1;
+    text-align: center;
+    align-self: center;
+}
+
+.quarter{
+    grid-column: 2;
+    grid-row: 2;
+    text-align: center;
+    align-self: center;
+}
+
+.semi{
+    grid-column: 3;
+    grid-row: 1;
+    text-align: center;
+    align-self: center;
+}
+
+.final{
+    grid-column: 3;
+    grid-row: 2;
+    text-align: center;
+    align-self: center;
+}
+
+/* Leaderbord css */
+table a{
+    color: black;
+    height: 100%;
+}
+.leaderbord{
+    height: 100%;
+    overflow-y: auto;
+}
+
+.leaderbord table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.leaderbord td {
+    border-top: 1px solid #6AB187;
+    text-align: left;
+    padding: 8px;
+}
+
+.leaderbord tr :hover{
+    transform: scale(1.05)
+}
+
+.table-link {
+  position: 'absolute';
+  left: 0;
+  height: '36px';
+  width: '100%';
+  cursor: 'pointer';
+}
+
+.leaderbord tr:nth-child(even) {
+    background-color: rgb(184, 253, 213);
+}
+.leaderbord tr:nth-child(odd) {
+    background-color: #6AB187;
+}
+
+/* Score cards */
+.score-card {
+    margin: 0.5em;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: calc(100% - 1em);
+    height: 55px;
+}
+
+.score-card td {
+    background:  #dddddd;  
+    text-align: left;
+    padding: 0.2em;
+}
+
+.score-card #goals{
+    min-width: 20px;
+    background: #23282D;
+    color: #dddddd;
+    text-align: center;
+}
+
+.score-card #points{
+    min-width: 45px;
+    background: white;
+    text-align: center;
+}
+
+table img{
+    width: 1em;
+    padding: 0em;
+    padding-top: 0.1em;
+}
+
+table #name{
+    min-width: 100px;
+}
+
+/* Graph */ 
+svg{
+    margin: 10px;
+}
+.points{
+    fill: #1F3F49;
+}
+.tick line{
+    stroke: #ccc;
+    stroke-dasharray: 10, 5;
+}
+.xAxis path,
+.xAxis line{
+    display: none;
+}
+.xAxis{
+    font-size: 1em;
+}
+.points_label{
+    font-size: 0.8em;
+    color: #1F3F49;
+}
+.legend rect {
+  fill:white;
+  stroke:black;
+  opacity:0.8;}

@@ -1,0 +1,30 @@
+{% load static %}
+
+<div class="leaderbord-header">
+    <div class="name">Games</div>
+</div>
+<div class="games-container">
+    <div class="group-games">
+        <h4>Group Stage</h4>
+        {% for game in group_stage %}
+          {{ game }}
+        {% endfor %}
+    </div>
+    <div class="last-16">
+        <h4>Last 16</h4>
+        {{ last_16 }}
+    </div>
+    <div class="quarter">
+        <h4>Quarter Finals</h4>
+        {{ quarter_final }}
+    </div>
+    <div class="semi">
+        <h4>Semi Finals</h4>
+        {{ semi_final }}
+    </div>
+    <div class="final">
+        <h4>Final</h4>
+        {{ final }}
+        </table>
+    </div>
+</div>

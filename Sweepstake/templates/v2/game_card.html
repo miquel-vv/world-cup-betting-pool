@@ -1,0 +1,15 @@
+{% load static %}
+
+<table class="score-card">
+  <tr>
+    <td id="img"><img src="{% static home_team.image %}"></td>
+    <td id="name">{{ home_team.name }}</td>
+    <td id="goals">{{ home_team.goals }}</td>
+    <td rowspan="2" id="points">{{ points }}</td>
+  </tr>   
+  <tr>
+    <td id="img"><img src="{% static away_team.image %}"></td>
+    <td id="name">{{ away_team.name }}</td>
+    <td id="goals">{{ away_team.goals }}</td>
+  </tr>
+</table>

@@ -1,0 +1,10 @@
+{% load static %}
+{% load app_tags %}
+<tr>
+    {% autoescape off %}
+    <td><a href="/{{ class|lower }}s/{{ name|replace_spaces }}">{{ position }}</a></td>
+    {% endautoescape %}
+    <td id="img"><a href="/v2/{{ class|lower }}s/{{ name|replace_spaces }}"><img src="{% static image %}"></a></td>
+    <td><a href="/{{ class|lower }}s/{{ name|replace_spaces }}">{{ name }}</a></td>
+    <td><a href="/{{ class|lower }}s/{{ name|replace_spaces }}">{{ points }}</a></td>
+</tr>

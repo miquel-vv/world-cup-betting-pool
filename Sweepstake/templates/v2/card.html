@@ -1,0 +1,17 @@
+{% load static %}
+{% load app_tags %}
+
+<div class="card">
+  <a class="card-link" href="/{{ class|lower }}s/{{ name|replace_spaces }}">
+  <div class="card-img">
+    <img src="{% static image %}">
+  </div>
+  <div class="card-text">
+      <h1>{{ name }}</h1>
+      {% autoescape off %}
+      <p>{{ position }}</p>
+      {% endautoescape %}
+      <p>{{ points }}</p>
+  </div>
+  </a>
+</div>

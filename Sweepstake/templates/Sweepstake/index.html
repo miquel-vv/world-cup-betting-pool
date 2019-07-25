@@ -1,0 +1,23 @@
+{% extends "Sweepstake/base.html" %}
+{% load static %}
+
+{% block title %} Index {% endblock %}
+
+{% block content %}
+<ul class="block-list">
+    <li id="block_1">
+        <a class="block" href="/participants">
+            <img src="{% static 'Sweepstake/ranking.jpeg' %}">
+            <h1>Leaderbords</h1>
+            <p>Can you still win?</p>
+        </a>
+    </li>
+    <li id="block_2">
+        <a class="block" href="/teams">
+            <img src="{% static 'Sweepstake/countries.jpeg' %}">
+            <h1>Country Performance</h1>
+            <p>Look at the teams you should have picked.</p>
+        </a>
+    </li>
+</ul>
+{% endblock %}

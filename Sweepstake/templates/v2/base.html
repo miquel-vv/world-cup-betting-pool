@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Dashboard</title>
+        <link rel="shortcut icon" href="{% static 'v2/icons/football_tab.svg' %}">
+        <link rel="stylesheet" href="{% static 'v2/style.css' %}">
+    </head>
+    <body>
+        <header>{{ overview_type }} Overview</header>
+        <div class="container">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <img src="{% static 'v2/icons/user-shape.svg' %}">
+                    <h1>{{ user.first_name|default:"Name" }}</h1>
+                    <h2>{{ user.last_name|default:"Last Name" }}</h2>
+                </div>
+                <ul class="sidebar-list">
+                    <a href="/"><li><img src="{% static 'v2/icons/home.svg' %}"><div class="name">Index</div></li></a>
+                    <a href="/participants"><li><img src="{% static 'v2/icons/rank.svg' %}"><div class="name">Leaderbords</div></li></a>
+                    <a href="/teams"><li><img src="{% static 'v2/icons/football.svg' %}"><div class="name">Teams Overview</div></li></a>
+                    <a href="/participants/{{ user.name|default:'Miquel_Vande_Velde' }}"><li><img src="{% static 'v2/icons/config.svg' %}"><div class="name">My Teams</div></li></a>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="dashboard">
+                    {% block db-content %}
+                    <div class="db-el" id="db-block-1_7-1_5">
+                        {{ card }}
+                    </div>
+                    <div class="db-el" id="db-block-1_7-5_13">
+                        <svg></svg>
+                    </div>
+                    <div class="db-el" id="db-block-7_13-1_5">
+                        <div class="leaderbord">
+                            <div class="leaderbord-header">
+                                <img src="{% static 'v2/icons/trophy.svg' %}">
+                                <div class="name">{{ leaderbord }}</div>
+                            </div>
+                            <table>
+                                {% for row in rows %}
+                                    {{row}}
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="db-el" id="db-block-7_13-5_13">
+                        {{ bottom_right }}
+                    </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+    <script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script type="text/javascript" src="{% static 'v2/graph.js' %}"></script>
+</html>
