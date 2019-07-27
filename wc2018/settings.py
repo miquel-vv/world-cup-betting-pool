@@ -63,6 +63,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'wc2018.urls'
+LOGIN_REDIRECT_URL = '/participants'
 
 TEMPLATES = [
     {

@@ -1,0 +1,22 @@
+{% extends "Sweepstake/base.html" %}
+{% load static %}
+
+{% block title %} Create User {% endblock %}
+
+{% block link %}
+<a href="/">Index</a>
+{% endblock %}
+
+{% block content %}
+<div class='form-grid'>
+  <div class='form-block' class='block'>
+    <form action="" method="post">
+      <table>
+        {{ form.as_table }}
+      </table>
+      <input type="submit" class="button" value="Create Participant">
+      {% csrf_token %}
+    </form>
+  </div>  
+</div>
+{% endblock %}

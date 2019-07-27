@@ -1,8 +1,11 @@
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from .models import Player, Participant, Team, Fixture
+from .forms import ParticipantForm
 from .management.commands.update_scores import Command as update_command
 
 import json
@@ -10,6 +13,53 @@ import json
 
 def index(request):
     return render(request, 'Sweepstake/index.html')
+
+
+def create_user(request):
+    if request.method == 'POST':
+        form = ParticipantForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            if not password == form.cleaned_data['confirm_password']:
+                raise ValidationError
+
+            #All names of participants and users are stored in title case. 
+            #This is necessary for links in the templates.
+            first_name = form.cleaned_data['first_name'].title()
+            last_name = form.cleaned_data['last_name'].title()
+            username = " ".join([first_name, last_name])
+            try:
+                User.objects.create_user(
+                    username=username,
+                    first_name=first_name, 
+                    password=password,
+                    last_name=last_name
+                )
+            except IntegrityError:
+                render(request, 'Sweepstake/create_user.html', {'form': ParticipantForm})
+
+            teams = [
+                Team.objects.get(name=form.cleaned_data['team_pot_'+chr(i+97)]) for i in range(0,4)
+            ]
+            topscorer = Player.objects.get(name=form.cleaned_data['topscorer'])
+            assist_king = Player.objects.get(name=form.cleaned_data['assist_king'])
+
+            new_partic = Participant(
+                name = username,
+                topscorer = topscorer,
+                assist_king = assist_king
+            )
+            new_partic.save()
+
+            with new_partic:
+                new_partic.teams.add(*teams)
+
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                return HttpResponseRedirect('/participants')
+            
+        
+    return render(request, 'Sweepstake/create_user.html', {'form': ParticipantForm})
 
 
 class DashboardView(View):
@@ -128,6 +178,9 @@ class LeaderbordView(View):
 
     def get(self, request, **kwargs):
         context = self.get_context()
+        if request.user.is_authenticated:
+            context['user'] = request.user
+
         return render(request, 'v2/base_leaderbord.html', context=context)
     
     def get_context(self):
@@ -168,11 +221,11 @@ class ParticipantLeaderbord(LeaderbordView):
 def update(request):
     updater = update_command()
     updater.handle()
-    return HttpResponseRedirect('/leaderbords')
+    return HttpResponseRedirect('/participants')
 
 
 class Itemview(View):
-    '''Class view from v1, not used in v2'''
+    '''Class view from v1, not used in v2. But kept for potential functionality.'''
     item = Participant
 
     def get(self, request, **kwargs):
@@ -192,12 +245,12 @@ class Itemview(View):
 
 
 class Participants(Itemview):
-    '''Class view from v1, not used in v2'''
+    '''Class view from v1, not used in v2. But kept for potential functionality.'''
     item = Participant
 
 
 class Teams(Participants):
-    '''Class view from v1, not used in v2'''
+    '''Class view from v1, not used in v2. But kept for potential functionality.'''
     item = Team
 
 

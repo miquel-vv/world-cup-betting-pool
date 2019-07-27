@@ -140,117 +140,75 @@ footer{
     padding:0em;
 }
 
-/*lists*/
-.container{
-    width: 100%;
-    height: 1100px;
+/*forms*/
+.form-grid{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 550px 550px;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 2em 1fr 2em;
+    min-height: 500px;
 }
 
-.item_list{
-    list-style-type: none;
-    padding-left: 0em;
-    margin: 1em;
-}
-.title{
-    display: flex;
-    margin: 0.5em;
-}
-.item{
-    display: flex;
-    margin: 0.5em;
-    background-color: #F0F8FF;
-    border-radius: 0.2em;
-    box-shadow: 2px 0px 5px;
-}
-
-.item:hover{
-    transform: scale(1.05);
-}
-
-.item_points{
-    background: #fff;
-    flex-basis: 20%;
-}
-.item_name{
-    flex-basis: 80%;
-}
-.item_name, .item_points{
-    display: inline;
-}
-
-/*leaderbords page specifics*/
-#participant_list{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 3;
-}
-
-#participant_pot{
-    grid-column-start: 3;
-    grid-column-end: 5;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
-
-#participant_location{
-    grid-column-start: 3;
-    grid-column-end: 5;
-    grid-row-start: 2;
-    grid-row-end: 3;
-}
-/*teams page specifics */
-#top_countries{
-    grid-column-start: 1;
-    grid-column-end: 5;
-    grid-row-start: 1;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.top_team{
-    width: 250px;
-    height: 250px;
-}
-
-.top_team h1{
-    margin-top: 2em;
-}
-
-#top0{
-    background-color: #ffd700;
-}
-
-#top1{
-    background-color: #c0c0c0;
-}
-
-#top2{
-    background-color: #cd7f32;
-}
-
-#pot1{
-    grid-column-start: 1;
-    grid-row-start: 2;
-}
-
-#pot2{
+.form-block{
+    position: relative;
     grid-column-start: 2;
     grid-row-start: 2;
+    align-self: flex-start;
+    display: block;
+    border: #2f4f4f;
+    box-shadow: 0px 4px 20px 0 rgba(0, 0, 0, 0.2), 0px -4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    min-height: 150px;
 }
 
-#pot3{
-    grid-column-start: 3;
-    grid-row-start: 2;
+.form-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2em;
+    width: 100%;
+    text-align: center;
+    background-color: #2f4f4f;
+    color: #fff;
 }
 
-#pot4{
-    grid-column-start: 4;
-    grid-row-start: 2;
+.form-block form{
+    height: 100%;
+}
+
+.form-block table{
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3em;
+    border-spacing: 15px 0;
+}
+
+select {
+  width: 100%;
+}
+
+.button{
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3em;
+    background-color: #2f4f4f;
+    border: none;
+}
+
+.button:hover{
+    background-color: gray;
+    color: #333;
+}
+
+.form-block th{
+    font-weight: normal;
+    text-align: right;
+}
+.form-block td{
+    text-align: left;
 }
 
 /* media responsiveness */
