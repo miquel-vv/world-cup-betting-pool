@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect
@@ -57,6 +57,7 @@ def create_user(request):
                 new_partic.set_points()
 
             user = authenticate(username=username, password=password)
+            login(request, user)
             if user is not None:
                 return HttpResponseRedirect('/participants')
             
