@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.db.utils import IntegrityError
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect
@@ -21,7 +23,8 @@ def create_user(request):
         if form.is_valid():
             password = form.cleaned_data['password']
             if not password == form.cleaned_data['confirm_password']:
-                raise ValidationError
+                messages.warning(request, 'Passwords do not match.')
+                return render(request, 'Sweepstake/create_user.html', {'form': form})
 
             #All names of participants and users are stored in title case. 
             #This is necessary for links in the templates.
@@ -36,7 +39,8 @@ def create_user(request):
                     last_name=last_name
                 )
             except IntegrityError:
-                render(request, 'Sweepstake/create_user.html', {'form': ParticipantForm})
+                messages.warning(request, 'First name, last name combo already in use.')
+                return render(request, 'Sweepstake/create_user.html', {'form': form})
 
             teams = [
                 Team.objects.get(name=form.cleaned_data['team_pot_'+chr(i+97)]) for i in range(0,4)
@@ -60,8 +64,10 @@ def create_user(request):
             login(request, user)
             if user is not None:
                 return HttpResponseRedirect('/participants')
+        else:
+            messages.warning(request, 'Please correct the form.')
+            return render(request, 'Sweepstake/create_user.html', {'form': form})
             
-        
     return render(request, 'Sweepstake/create_user.html', {'form': ParticipantForm})
 
 

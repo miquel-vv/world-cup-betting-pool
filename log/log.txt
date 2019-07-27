@@ -5431,3 +5431,122 @@ Traceback (most recent call last):
   File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
     self.model._meta.object_name
 Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 17:23:47,982:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 272, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 17:26:39,132:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 272, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 17:53:26,264:django.request:ERROR:Internal Server Error: /create_user
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/backends/utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.IntegrityError: duplicate key value violates unique constraint "auth_user_username_key"
+DETAIL:  Key (username)=(Test4 Case) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 38, in create_user
+    last_name=last_name
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/contrib/auth/models.py", line 150, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/contrib/auth/models.py", line 144, in _create_user
+    user.save(using=self._db)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/contrib/auth/base_user.py", line 73, in save
+    super().save(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/base.py", line 729, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/base.py", line 759, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/base.py", line 842, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/base.py", line 880, in _do_insert
+    using=using, raw=raw)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 1125, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1285, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/backends/utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/backends/utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/backends/utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/backends/utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/backends/utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "auth_user_username_key"
+DETAIL:  Key (username)=(Test4 Case) already exists.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 40, in create_user
+    except IntegrityError:
+NameError: name 'IntegrityError' is not defined
+2019-07-27 17:53:26,442:django.request:WARNING:Not Found: /favicon.ico
+2019-07-27 17:57:32,414:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 276, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.

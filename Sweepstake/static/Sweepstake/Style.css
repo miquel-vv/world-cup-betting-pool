@@ -258,3 +258,15 @@ select {
         grid-column: 2;
     }
 }
+
+/* messages */
+.messages, .errorlist.nonfield{
+    list-style: none;
+}
+.messages .warning, .errorlist.nonfield li{
+    color: darkred;
+    background-color: rgba(240, 128, 128, 0.6);
+    border: rgba(139, 0, 0, 0.6);
+    border-style: solid;
+    border-width: 0.2em;
+}
