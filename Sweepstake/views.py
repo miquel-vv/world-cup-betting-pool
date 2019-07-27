@@ -52,7 +52,9 @@ def create_user(request):
             new_partic.save()
 
             with new_partic:
+                new_partic.pot = form.cleaned_data["pot"].title()
                 new_partic.teams.add(*teams)
+                new_partic.set_points()
 
             user = authenticate(username=username, password=password)
             if user is not None:
