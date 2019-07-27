@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load app_tags %}
 <html>
     <head>
         <title>Dashboard</title>
@@ -19,7 +20,7 @@
                     <a href="/"><li><img src="{% static 'v2/icons/home.svg' %}"><div class="name">Index</div></li></a>
                     <a href="/participants"><li><img src="{% static 'v2/icons/rank.svg' %}"><div class="name">Leaderbords</div></li></a>
                     <a href="/teams"><li><img src="{% static 'v2/icons/football.svg' %}"><div class="name">Teams Overview</div></li></a>
-                    <a href="/participants/{{ user.name|default:'Miquel_Vande_Velde' }}"><li><img src="{% static 'v2/icons/config.svg' %}"><div class="name">My Teams</div></li></a>
+                    <a href="/participants/{{ user.username|replace_spaces|default:'login' }}"><li><img src="{% static 'v2/icons/config.svg' %}"><div class="name">My Teams</div></li></a>
                 </ul>
             </div>
             <div class="content">

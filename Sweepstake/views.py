@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.utils import IntegrityError
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -63,7 +64,8 @@ def create_user(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             if user is not None:
-                return HttpResponseRedirect('/participants')
+                link = user.username.replace(' ', '_')
+                return HttpResponseRedirect('/participants/'+link)
         else:
             messages.warning(request, 'Please correct the form.')
             return render(request, 'Sweepstake/create_user.html', {'form': form})
@@ -71,9 +73,10 @@ def create_user(request):
     return render(request, 'Sweepstake/create_user.html', {'form': ParticipantForm})
 
 
-class DashboardView(View):
-    '''A mixin class to create dashboard views.'''
+class DashboardView(LoginRequiredMixin, View):
     item = None
+    login_url = '/login'
+    redirect_field_name = 'redirect_to'
 
     def get(self, request, **kwargs):
         name = kwargs["name"].replace('_', ' ')
@@ -182,8 +185,10 @@ def teams(request):
     return render(request, 'Sweepstake/teams.html')
 
 
-class LeaderbordView(View):
+class LeaderbordView(LoginRequiredMixin, View):
     item_class = None
+    login_url = '/login'
+    redirect_field_name = 'redirect_to'
 
     def get(self, request, **kwargs):
         context = self.get_context()

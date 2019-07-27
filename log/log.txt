@@ -5550,3 +5550,341 @@ Traceback (most recent call last):
   File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
     self.model._meta.object_name
 Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:07:13,229:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:07:24,631:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:09:42,386:django.request:ERROR:Internal Server Error: /api/v2/teams/teams
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Team matching query does not exist.
+2019-07-27 18:09:50,468:django.request:ERROR:Internal Server Error: /participants/logout
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 81, in get
+    self.member = self.item.objects.get_member(name)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/models.py", line 91, in get_member
+    raise KeyError("Member " + name + " not found.")
+KeyError: 'Member logout not found.'
+2019-07-27 18:09:58,745:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:10:41,461:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:10:42,462:django.request:ERROR:Internal Server Error: /participants/login
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 81, in get
+    self.member = self.item.objects.get_member(name)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/models.py", line 91, in get_member
+    raise KeyError("Member " + name + " not found.")
+KeyError: 'Member login not found.'
+2019-07-27 18:11:39,476:django.request:ERROR:Internal Server Error: /participants/login
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 81, in get
+    self.member = self.item.objects.get_member(name)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/models.py", line 91, in get_member
+    raise KeyError("Member " + name + " not found.")
+KeyError: 'Member login not found.'
+2019-07-27 18:11:48,413:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:11:49,978:django.request:ERROR:Internal Server Error: /api/v2/participants/login
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:12:58,127:django.request:WARNING:Not Found: /api/v2/participants/
+2019-07-27 18:12:59,767:django.request:ERROR:Internal Server Error: /api/v2/participants/login
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:13:14,220:django.request:WARNING:Not Found: /api/v2/participants/
+2019-07-27 18:13:15,711:django.request:ERROR:Internal Server Error: /participants/login
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 81, in get
+    self.member = self.item.objects.get_member(name)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/models.py", line 91, in get_member
+    raise KeyError("Member " + name + " not found.")
+KeyError: 'Member login not found.'
+2019-07-27 18:13:37,774:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:14:03,240:django.request:ERROR:Internal Server Error: /api/v2/teams/teams
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 277, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Team matching query does not exist.
+2019-07-27 18:16:51,274:django.request:WARNING:Not Found: /accounts/login/
+2019-07-27 18:18:45,605:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 281, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
+2019-07-27 18:18:50,624:django.request:ERROR:Internal Server Error: /participants/miquel
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/contrib/auth/mixins.py", line 52, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 83, in get
+    self.member = self.item.objects.get_member(name)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/models.py", line 91, in get_member
+    raise KeyError("Member " + name + " not found.")
+KeyError: 'Member miquel not found.'
+2019-07-27 18:18:55,323:django.request:WARNING:Not Found: /api/v2/participants/
+2019-07-27 19:26:03,710:django.request:ERROR:Internal Server Error: /participants/miquel
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/contrib/auth/mixins.py", line 52, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 83, in get
+    self.member = self.item.objects.get_member(name)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/models.py", line 91, in get_member
+    raise KeyError("Member " + name + " not found.")
+KeyError: 'Member miquel not found.'
+2019-07-27 19:27:23,031:django.request:ERROR:Internal Server Error: /api/v2/participants/participants
+Traceback (most recent call last):
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/world-cup-betting-pool/Sweepstake/views.py", line 281, in get
+    item = self.item_class.objects.get(name=name)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/miquel/Projects/wc-betting-pool/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+Sweepstake.models.DoesNotExist: Participant matching query does not exist.
