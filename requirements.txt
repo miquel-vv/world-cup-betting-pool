@@ -16,7 +16,7 @@ idna==2.7
 kombu==4.2.1
 pluggy==0.7.1
 psycopg2==2.7.4
-py==1.5.4
+py==1.10.0
 pytz==2018.4
 redis==2.10.6
 requests==2.20.0
